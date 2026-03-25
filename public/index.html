@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uno Multiplayer - Premium Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="lobby" class="container">
+        <h1>Uno Multiplayer</h1>
+        <div class="lobby-form">
+            <input type="text" id="playerName" placeholder="Your Name" autocomplete="off">
+            <input type="text" id="roomId" placeholder="Room ID" autocomplete="off">
+            <button id="joinBtn">Join Room</button>
+        </div>
+    </div>
+
+    <div id="game-room" class="container hidden">
+        <div class="top-bar">
+            <h2 id="room-display">Room: </h2>
+            <button id="startBtn" class="hidden">Start Game</button>
+        </div>
+        
+        <div class="game-board">
+            <div id="opponents" class="opponents-container"></div>
+            
+            <div class="center-pile">
+                <div id="deck-pile" class="card-pile">
+                    <img src="/assets/Deck.png" alt="Deck" id="draw-card">
+                    <span class="pile-label">Draw</span>
+                </div>
+                <div id="discard-pile" class="card-pile">
+                    <img src="" alt="Discard Pile" id="top-card" class="hidden">
+                    <span class="pile-label">Discard / Play</span>
+                </div>
+            </div>
+
+            <div class="current-player-info">
+                <div class="player-actions">
+                    <button id="skipBtn" class="hidden">Skip Turn</button>
+                    <div id="selected-info" class="hidden">Playing <span id="selected-count">1</span> card(s)</div>
+                </div>
+                <div id="hand-container" class="hand"></div>
+                <div class="player-controls">
+                    <h3 id="current-name">Player</h3>
+                    <div id="turn-indicator" class="indicator hidden">Your Turn!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="color-picker" class="modal hidden">
+        <div class="modal-content">
+            <h3>Select a Color</h3>
+            <div class="color-options">
+                <div class="color-btn red" data-color="Red"></div>
+                <div class="color-btn blue" data-color="Blue"></div>
+                <div class="color-btn green" data-color="Green"></div>
+                <div class="color-btn yellow" data-color="Yellow"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-over" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="winner-text">Winner!</h2>
+            <button onclick="location.reload()">Back to Lobby</button>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+</body>
+</html>
