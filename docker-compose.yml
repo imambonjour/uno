@@ -1,0 +1,6 @@
+services:
+  uno:
+    build: .
+    ports:
+      - "7772:3000"
+    restart: always
