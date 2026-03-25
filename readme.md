@@ -1,4 +1,4 @@
-# Uno Multiplayer - Playful Edition
+# Uno Multiplayer
 
 A real-time multiplayer Uno game built with Node.js, Socket.io, and a playful, gaming-inspired UI.
 
