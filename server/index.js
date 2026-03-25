@@ -90,7 +90,11 @@ io.on('connection', (socket) => {
         for (const roomId in games) {
             const game = games[roomId];
             game.removePlayer(socket.id);
-            io.to(roomId).emit('roomUpdate', game.getState());
+            if (game.players.length === 0) {
+                delete games[roomId];
+            } else {
+                io.to(roomId).emit('roomUpdate', game.getState());
+            }
         }
     });
 });

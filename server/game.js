@@ -23,7 +23,15 @@ class Game {
     }
 
     removePlayer(id) {
-        this.players = this.players.filter(p => p.id !== id);
+        const index = this.players.findIndex(p => p.id === id);
+        if (index !== -1) {
+            this.players.splice(index, 1);
+            if (index < this.currentPlayerIndex) {
+                this.currentPlayerIndex--;
+            } else if (this.currentPlayerIndex >= this.players.length) {
+                this.currentPlayerIndex = 0;
+            }
+        }
     }
 
     start() {
@@ -38,7 +46,7 @@ class Game {
         }
 
         let firstCard = this.deck.draw();
-        while (firstCard.type === 'wild' || firstCard.type === 'wild-draw-4') {
+        while (firstCard.type !== 'number') {
             this.deck.addCards([firstCard]);
             this.deck.shuffle();
             firstCard = this.deck.draw();
@@ -113,11 +121,10 @@ class Game {
         }
 
         // All good, process the play
-        const sortedIndices = indices.sort((a, b) => b - a);
+        const sortedIndices = [...indices].sort((a, b) => b - a);
         let turnAdvances = 1;
 
-        for (const idx of sortedIndices) {
-            const card = player.hand.splice(idx, 1)[0];
+        for (const card of cards) {
             this.discardPile.push(card);
             
             if (card.value === 'Draw') {
@@ -133,6 +140,10 @@ class Game {
                     this.direction *= -1;
                 }
             }
+        }
+
+        for (const idx of sortedIndices) {
+            player.hand.splice(idx, 1);
         }
 
         const lastCard = cards[cards.length - 1];
@@ -207,7 +218,7 @@ class Game {
                 id: p.id,
                 name: p.name,
                 handCount: p.hand.length,
-                isCurrentPlayer: this.players[this.currentPlayerIndex].id === p.id
+                isCurrentPlayer: this.players[this.currentPlayerIndex]?.id === p.id
             })),
             hand: this.players.find(p => p.id === playerId)?.hand || [],
             topCard: this.discardPile[this.discardPile.length - 1],

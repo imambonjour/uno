@@ -128,10 +128,8 @@ function renderGame(state) {
     isMyTurn = state.players[state.currentPlayerIndex].id === socket.id;
     currentHand = state.hand;
     
-    // Reset selection if it's no longer our turn and we haven't selected anything
-    if (!isMyTurn) {
-        selectedIndices = [];
-    }
+    // Reset selection every time game state updates because hand indices shift
+    selectedIndices = [];
 
     // Update top card
     if (state.topCard) {
