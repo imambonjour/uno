@@ -175,7 +175,8 @@ function renderGame(state) {
     handContainer.innerHTML = '';
     state.hand.forEach((card, index) => {
         const cardEl = document.createElement('div');
-        cardEl.className = 'card' + (selectedIndices.includes(index) ? ' selected' : '');
+        const isSelected = selectedIndices.includes(index);
+        cardEl.className = 'card' + (isSelected ? ' selected' : '');
         cardEl.innerHTML = `<img src="/assets/${card.image}" alt="${card.color} ${card.value}">`;
         
         const mid = (state.hand.length - 1) / 2;
@@ -183,6 +184,13 @@ function renderGame(state) {
         const rotate = offset * 5;
         const translateY = Math.abs(offset) * 5;
         cardEl.style.transform = `rotate(${rotate}deg) translateY(${translateY}px)`;
+        
+        if (isSelected) {
+            const selectionOrder = selectedIndices.indexOf(index);
+            cardEl.style.zIndex = 100 + selectionOrder;
+        } else {
+            cardEl.style.zIndex = '';
+        }
 
         cardEl.addEventListener('click', () => {
             if (isMyTurn) {
@@ -219,8 +227,11 @@ function toggleCardSelection(index) {
     document.querySelectorAll('.hand .card').forEach((el, i) => {
         if (selectedIndices.includes(i)) {
             el.classList.add('selected');
+            const selectionOrder = selectedIndices.indexOf(i);
+            el.style.zIndex = 100 + selectionOrder;
         } else {
             el.classList.remove('selected');
+            el.style.zIndex = '';
         }
     });
 
