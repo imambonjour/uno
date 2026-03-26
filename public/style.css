@@ -114,9 +114,8 @@ button:active {
 #game-room {
     width: 100%;
     justify-content: flex-start;
-    background-image: url('/assets/Table_0.png');
-    background-size: cover;
-    background-position: center;
+    background: radial-gradient(circle at center, #2c3e50 0%, #000000 100%);
+    transition: background 0.5s ease;
 }
 
 .top-bar {

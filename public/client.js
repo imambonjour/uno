@@ -158,15 +158,14 @@ function renderGame(state) {
         }
 
         // Dynamic background
-        const colors = {
-            'Red': 'Table_3.png',
-            'Blue': 'Table_1.png',
-            'Green': 'Table_2.png',
-            'Yellow': 'Table_4.png'
+        const bgColors = {
+            'Red': 'var(--accent-red)',
+            'Blue': 'var(--accent-blue)',
+            'Green': 'var(--accent-green)',
+            'Yellow': 'var(--accent-yellow)'
         };
-        if (colors[state.currentColor]) {
-            gameRoom.style.backgroundImage = `url('/assets/${colors[state.currentColor]}')`;
-        }
+        const centerColor = bgColors[state.currentColor] || '#2c3e50';
+        gameRoom.style.background = `radial-gradient(circle at center, ${centerColor} 0%, #000000 100%)`;
     }
 
     // Update hand
