@@ -133,7 +133,7 @@ function renderGame(state) {
 
     // Update top card
     if (state.topCard) {
-        topCardImg.src = `/assets/${state.topCard.image}`;
+        topCardImg.style.backgroundPosition = getCardBackgroundPosition(state.topCard);
         topCardImg.classList.remove('hidden');
         
         // Show/Hide turn indicators and skip button
@@ -174,7 +174,8 @@ function renderGame(state) {
         const cardEl = document.createElement('div');
         const isSelected = selectedIndices.includes(index);
         cardEl.className = 'card' + (isSelected ? ' selected' : '');
-        cardEl.innerHTML = `<img src="/assets/${card.image}" alt="${card.color} ${card.value}">`;
+        cardEl.title = `${card.color} ${card.value}`;
+        cardEl.innerHTML = `<div class="sprite-card" style="background-position: ${getCardBackgroundPosition(card)};"></div>`;
         
         const mid = (state.hand.length - 1) / 2;
         const offset = index - mid;
@@ -257,4 +258,32 @@ function renderOpponents(players) {
             opponentsContainer.appendChild(opponentEl);
         }
     });
+}
+
+function getCardBackgroundPosition(card) {
+    if (!card) return '0% 100%';
+    if (card === 'deck') return '0% 100%';
+
+    let col = 0;
+    let row = 0;
+
+    if (card.type === 'wild' || card.type === 'wild-draw-4') {
+        row = 4;
+        col = card.value === 'Draw4' ? 2 : 1;
+    } else {
+        const colors = { 'Blue': 0, 'Green': 1, 'Red': 2, 'Yellow': 3 };
+        row = colors[card.color];
+        
+        if (card.value === 'Draw') col = 10;
+        else if (card.value === 'Reverse') col = 11;
+        else if (card.value === 'Skip') col = 12;
+        else col = parseInt(card.value);
+    }
+    
+    // Background position percentage formula: (col / (cols - 1)) * 100
+    // We have 13 columns (12 gaps) and 5 rows (4 gaps)
+    const x = col * (100 / 12);
+    const y = row * (100 / 4);
+    
+    return `${x}% ${y}%`;
 }

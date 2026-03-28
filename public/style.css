@@ -178,7 +178,7 @@ button:active {
     transform: scale(1.05);
 }
 
-.card-pile img {
+.card-pile .sprite-card {
     width: 140px;
     height: 210px;
     border-radius: 15px;
@@ -258,7 +258,7 @@ button:active {
 
 .hand .card:first-child { margin-left: 0; }
 
-.hand .card img {
+.hand .card .sprite-card {
     width: 100%;
     height: 100%;
     border-radius: 12px;
@@ -275,9 +275,22 @@ button:active {
     z-index: 150;
 }
 
-.hand .card.selected img {
-    border-color: var(--accent-yellow);
-    box-shadow: 0 0 30px var(--accent-yellow);
+.hand .card.selected .sprite-card {
+    border-radius: 12px;
+    box-shadow: 0 0 0 4px var(--accent-yellow), 0 0 30px var(--accent-yellow);
+}
+
+.sprite-card {
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/card.png');
+    background-size: 1300% 500%;
+    background-repeat: no-repeat;
+    display: block;
+}
+
+#draw-card {
+    background-position: 0% 100%;
 }
 
 .hand .card.selected::after {
